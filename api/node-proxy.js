@@ -18,10 +18,7 @@ const server = http.createServer(function(req, res) {
   
   
   const credentials = auth(req);
-  if((typeof credentials != 'undefined') && (credentials.name.indexOf('://')!= -1) ) {
-    origin = credentials.name;//如果输入了网址则变更
-    console.log('目标变更:',origin);
-  }
+  
     
   if (!credentials || !isAuthed(credentials, username, password)) {
 
@@ -41,6 +38,15 @@ const server = http.createServer(function(req, res) {
     proxyRes.headers['x-proxy'] = "simple-basic-http-auth-proxy-vercel";
     
     // console.log('Updated [proxy] response', JSON.stringify(proxyRes.headers, true, 2));
+    if((typeof credentials != 'undefined') && (credentials.name.indexOf('://')!= -1) ) {
+      origin = credentials.name;//如果输入了网址则变更
+      console.log('目标变更:',origin);
+    }
+    
+    proxyRes.headers['x-proxy-domain'] = origin;
+    
+    
+    
     
   });
   proxy.web(req, res, { target: `${origin}` });
