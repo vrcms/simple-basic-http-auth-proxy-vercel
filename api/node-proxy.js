@@ -20,18 +20,25 @@ const server = http.createServer(function(req, res) {
   
   // console.log('ORIGIN:', process.env.ORIGIN);
   
-  const credentials = auth(req);
-  console.log('credentials:',credentials);
-  if(credentials.name.indexOf('.') != -1){
-    //这里使用用户名作为目标域名
-    username = credentials.name;
-    origin = username;
-  }
+  const credentials = auth(req); 
     
-  if (!credentials || !isAuthed(credentials, username, password)) {
-    res.statusCode = 401;
-    res.setHeader('WWW-Authenticate', 'Basic realm="example"');
-    res.end('Access denied. error password!');
+  if (!credentials) {
+    
+   console.log('credentials:',credentials);
+    if(credentials.name.indexOf('.') != -1){
+      //这里使用用户名作为目标域名
+      username = credentials.name;
+      origin = username;
+    }
+    
+    if(!isAuthed(credentials, username, password)){
+      res.statusCode = 401;
+      res.setHeader('WWW-Authenticate', 'Basic realm="example"');
+      res.end('Access denied. error password!');
+    }
+    
+    
+    
   } else {
     // do nothing
     // res.end('Access granted')
