@@ -2,6 +2,9 @@ const http = require('http');
 const httpProxy = require('http-proxy');
 const auth = require('basic-auth');
 var cache = require('memory-cache');
+var Cookies = require('cookies');
+//cookies进行签名(加密)
+var keys = ['keyboard cat'];
 
 // Create a proxy server with custom application logic
 const proxy = httpProxy.createProxyServer({changeOrigin: true, autoRewrite: true, hostRewrite: true, followRedirects: true});
@@ -56,18 +59,20 @@ const server = http.createServer(function(req, res) {
     
   });
   
+  //创建cookie对象
+  var cookies = new Cookies(req, res, { keys: keys });
+  var lastorigin = cookies.get('lastorigin', { signed: true });
+  console.log('65 lastcookie==',lastorigin);
+  
   if(req && req.url.substring(0,3) == '/F/'){
-      cache.put('origin','https://www.google.com');
-        console.log('cache==>',cache.get('origin'));
+     cookies.set('lastorigin', 'https://www.google.com', { signed: true,maxAge:0 }); //永久有效      
   }
   
-   console.log('origin 59==>',origin); 
-    cacheorigin = cache.get('origin');
-    console.log('cache 61 ==>',cacheorigin);
-    if(cacheorigin) {
-      origin = cacheorigin;
-      console.log('change64==>',origin);
-    }  
+  
+  if(lastorigin){
+    origin = lastorigin
+  } 
+ 
     
   proxy.web(req, res, { target: `${origin}` });
   
