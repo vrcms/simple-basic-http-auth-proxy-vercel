@@ -22,16 +22,16 @@ const server = http.createServer(function(req, res) {
   
   const credentials = auth(req); 
     
-  if (!credentials || !isAuthed(credentials, username, password)) {    
+//   if (!credentials || !isAuthed(credentials, username, password)) {    
 
-      res.statusCode = 401;
-      res.setHeader('WWW-Authenticate', 'Basic realm="example"');
-      res.end('Access denied. error password!');
+//       res.statusCode = 401;
+//       res.setHeader('WWW-Authenticate', 'Basic realm="example"');
+//       res.end('Access denied. error password!');
     
-  } else {
-    // do nothing
-    // res.end('Access granted')
-  }
+//   } else {
+//     // do nothing
+//     // res.end('Access granted')
+//   }
 
 
   proxy.on('proxyRes', function(proxyRes, req, res) {
