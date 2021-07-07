@@ -7,6 +7,7 @@ var cache = require('memory-cache');
 const proxy = httpProxy.createProxyServer({changeOrigin: true, autoRewrite: true, hostRewrite: true, followRedirects: true});
 var origin = (process.env.ORIGIN && process.env.ORIGIN!='') ?process.env.ORIGIN:'https://www.google.com';//默认值
 var cacheorigin = cache.get('origin');
+console.log('memory==>',cacheorigin);
     if(cacheorigin) {
       origin = cacheorigin;
       console.log('change==>',origin);
