@@ -12,7 +12,7 @@ const server = http.createServer(function(req, res) {
 //   const origin = process.env.ORIGIN;
 //   const password = process.env.PASSWORD;
 //   const username = process.env.USERNAME;
-  var origin = 'www.google.com';//默认值
+  var origin = 'https://www.google.com';//默认值
   const password = process.env.PASSWORD?process.env.PASSWORD:'123456';//使用环境密码或者默认密码
   var username = origin;//使用默认域名值
 
