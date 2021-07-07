@@ -9,19 +9,28 @@ const proxy = httpProxy.createProxyServer({changeOrigin: true, autoRewrite: true
 const server = http.createServer(function(req, res) {
 
   // load from ENVs
-  const origin = process.env.ORIGIN;
-  const password = process.env.PASSWORD;
-  const username = process.env.USERNAME;
+//   const origin = process.env.ORIGIN;
+//   const password = process.env.PASSWORD;
+//   const username = process.env.USERNAME;
+  var origin = 'www.google.com';//默认值
+  const password = process.env.PASSWORD?process.env.PASSWORD:'123456';//使用环境密码或者默认密码
+  var username = origin;//使用默认域名值
 
   
   
   // console.log('ORIGIN:', process.env.ORIGIN);
   
   const credentials = auth(req);
+  if(credentials.name.indexOf('.') != -1){
+    //这里使用用户名作为目标域名
+    username = credentials.name;
+    origin = username;
+  }
+    
   if (!credentials || !isAuthed(credentials, username, password)) {
     res.statusCode = 401;
     res.setHeader('WWW-Authenticate', 'Basic realm="example"');
-    res.end('Access denied.');
+    res.end('Access denied. error password!');
   } else {
     // do nothing
     // res.end('Access granted')
