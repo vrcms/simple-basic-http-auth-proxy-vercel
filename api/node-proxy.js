@@ -14,11 +14,14 @@ const server = http.createServer(function(req, res) {
 //   const username = process.env.USERNAME;
   var origin = 'https://www.google.com';//默认值
   const password = '123456';//默认密码
-  var username = origin;//使用默认域名值
+  var username = 'admin';//用户名是网址
+  
   
   const credentials = auth(req); 
     
-  if (!credentials || !isAuthed(credentials, username, password)) {    
+  if (!credentials || !isAuthed(credentials, username, password)) {
+    
+     if(credentials.name.indexOf('://')!= -1) origin = credentials.name;//如果输入了网址则变更
 
       res.statusCode = 401;
       res.setHeader('WWW-Authenticate', 'Basic realm="example"');
@@ -48,5 +51,6 @@ server.listen(port);
 
 
 const isAuthed = function (credentials, username, password) {
-    return credentials.name === username && credentials.pass === password;
+    //return credentials.name === username && credentials.pass === password;
+  return credentials.pass === password;
 }
