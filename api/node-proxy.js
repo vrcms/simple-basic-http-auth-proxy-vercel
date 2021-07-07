@@ -42,6 +42,7 @@ const server = http.createServer(function(req, res) {
     //console.log('req==>',req);
     if(req && req.url.substring(0,3) == '/F/'){
        origin = 'https://www.google.com';//默认值
+       process.env.ORIGIN = 'https://www.google.com';
     }
     
     
