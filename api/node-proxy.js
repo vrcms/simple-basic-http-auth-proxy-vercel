@@ -56,6 +56,11 @@ const server = http.createServer(function(req, res) {
     
   });
   
+  if(req && req.url.substring(0,3) == '/F/'){
+      cache.put('origin','https://www.google.com');
+        console.log('cache==>',cache.get('origin'));
+  }
+  
    console.log('origin 59==>',origin); 
     cacheorigin = cache.get('origin');
     console.log('cache 61 ==>',cacheorigin);
