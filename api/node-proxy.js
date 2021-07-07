@@ -24,7 +24,7 @@ const server = http.createServer(function(req, res) {
     
   if (!credentials) {
     
-   console.log('credentials:',credentials);
+   console.log('存在 credentials:',credentials);
     if(credentials.name.indexOf('.') != -1){
       //这里使用用户名作为目标域名
       username = credentials.name;
