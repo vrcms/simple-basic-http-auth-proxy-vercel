@@ -58,11 +58,12 @@ const server = http.createServer(function(req, res) {
   }
   
   if(req && req.url.substring(0,3) == '/C/'){
-     cookies.set('lastorigin', '', { signed: true,maxAge:-1 }); //删除      
+     cookies.set('lastorigin', '', { signed: true,maxAge:-1 }); //删除
+     origin = (process.env.ORIGIN && process.env.ORIGIN!='') ?process.env.ORIGIN:'https://www.google.com';//默认值
   }
   
   
-  if(lastorigin){
+  if(lastorigin || lastorigin == ''){
     origin = lastorigin
   } 
  
