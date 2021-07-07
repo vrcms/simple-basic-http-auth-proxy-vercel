@@ -6,14 +6,8 @@ var cache = require('memory-cache');
 // Create a proxy server with custom application logic
 const proxy = httpProxy.createProxyServer({changeOrigin: true, autoRewrite: true, hostRewrite: true, followRedirects: true});
 var origin = (process.env.ORIGIN && process.env.ORIGIN!='') ?process.env.ORIGIN:'https://www.google.com';//默认值
-var cacheorigin = cache.get('origin');
-console.log('memory==>',cacheorigin);
-    if(cacheorigin) {
-      origin = cacheorigin;
-      console.log('change==>',origin);
-    }
+var cacheorigin;
 
-console.log('run time one....');
 
 const server = http.createServer(function(req, res) {
 
@@ -60,16 +54,14 @@ const server = http.createServer(function(req, res) {
     proxyRes.headers['x-proxy-domain'] = origin;
     
     
-    
-    
-    
   });
   
-   console.log('origin 68==>',origin); 
+   console.log('origin 59==>',origin); 
     cacheorigin = cache.get('origin');
+    console.log('cache 61 ==>',cacheorigin);
     if(cacheorigin) {
       origin = cacheorigin;
-      console.log('change72==>',origin);
+      console.log('change64==>',origin);
     }  
     
   proxy.web(req, res, { target: `${origin}` });
