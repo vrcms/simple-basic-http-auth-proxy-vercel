@@ -13,6 +13,7 @@ console.log('memory==>',cacheorigin);
       console.log('change==>',origin);
     }
 
+console.log('run time one....');
 
 const server = http.createServer(function(req, res) {
 
@@ -58,10 +59,17 @@ const server = http.createServer(function(req, res) {
     
     proxyRes.headers['x-proxy-domain'] = origin;
     
+    cacheorigin = cache.get('origin');
+    if(cacheorigin) {
+      origin = cacheorigin;
+      console.log('change65==>',origin);
+    }  
     
     
     
   });
+    
+    
   proxy.web(req, res, { target: `${origin}` });
   
 });
