@@ -50,21 +50,20 @@ const server = http.createServer(function(req, res) {
   
   //创建cookie对象
   var cookies = new Cookies(req, res, { keys: keys });
-  var lastorigin = cookies.get('lastorigin', { signed: true });
-  console.log('65 lastcookie==',lastorigin);
-  
   if(req && req.url.substring(0,3).toUpperCase() == '/F/'){
+    //更改目标
      cookies.set('lastorigin', 'https://www.google.com', { signed: true,maxAge:0 }); //永久有效      
   }
   
   if(req && req.url.substring(0,3).toUpperCase() == '/C/'){
      cookies.set('lastorigin', '', { signed: true,maxAge:-1 }); //删除
-     origin = (process.env.ORIGIN && process.env.ORIGIN!='') ?process.env.ORIGIN:'https://www.google.com';//默认值
-     lastorigin = '';
+     origin = (process.env.ORIGIN && process.env.ORIGIN!='') ?process.env.ORIGIN:'https://www.google.com';//默认值     
   }
   
+  var lastorigin = cookies.get('lastorigin', { signed: true });
+  console.log('65 lastcookie==',lastorigin);
   
-  if(lastorigin || lastorigin != ''){
+  if(lastorigin && (lastorigin.indexOf('://') != -1)){
     origin = lastorigin
   } 
  
