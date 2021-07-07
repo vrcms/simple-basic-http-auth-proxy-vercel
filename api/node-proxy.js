@@ -1,7 +1,7 @@
 const http = require('http');
 const httpProxy = require('http-proxy');
 const auth = require('basic-auth');
-var cache = require('memory-cache');
+
 var Cookies = require('cookies');
 //cookies进行签名(加密)
 var keys = ['keyboard cat'];
@@ -42,18 +42,7 @@ const server = http.createServer(function(req, res) {
     // console.log('Raw [target] response', JSON.stringify(proxyRes.headers, true, 2));
     
     proxyRes.headers['x-proxy'] = "simple-basic-http-auth-proxy-vercel";
-    
-    //console.log('req==>',req);
-    if(req && req.url.substring(0,3) == '/F/'){
-      cache.put('origin','https://www.google.com');
-        console.log('cache==>',cache.get('origin'));
-    }
-    
-    if(req && req.url.substring(0,3) == '/C/'){
-      cache.del('origin');
-    }
-    
-    
+        
     proxyRes.headers['x-proxy-domain'] = origin;
     
     
@@ -66,6 +55,10 @@ const server = http.createServer(function(req, res) {
   
   if(req && req.url.substring(0,3) == '/F/'){
      cookies.set('lastorigin', 'https://www.google.com', { signed: true,maxAge:0 }); //永久有效      
+  }
+  
+  if(req && req.url.substring(0,3) == '/C/'){
+     cookies.set('lastorigin', '', { signed: true,maxAge:-1 }); //删除      
   }
   
   
