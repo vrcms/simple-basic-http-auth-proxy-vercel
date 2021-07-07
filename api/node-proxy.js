@@ -56,6 +56,7 @@ const server = http.createServer(function(req, res) {
      var targeturl = 'https://www.google.com';//默认url
      var inurl = req.url.substring(3);
      console.log('目标:',inurl);
+    if(inurl.indexOf('://') != -1 ) targeturl = inurl;
      cookies.set('lastorigin', targeturl, { signed: true,maxAge:0 }); //永久有效      
   }
   
