@@ -1,11 +1,13 @@
 const http = require('http');
 const httpProxy = require('http-proxy');
 const auth = require('basic-auth');
+var cache = require('memory-cache');
 
 // Create a proxy server with custom application logic
 const proxy = httpProxy.createProxyServer({changeOrigin: true, autoRewrite: true, hostRewrite: true, followRedirects: true});
 var origin = (process.env.ORIGIN && process.env.ORIGIN!='') ?process.env.ORIGIN:'https://www.google.com';//默认值
-
+var cacheorigin = cache.get('origin');
+    if(cacheorigin) origin = cacheorigin;
 
 
 const server = http.createServer(function(req, res) {
@@ -41,8 +43,11 @@ const server = http.createServer(function(req, res) {
     
     //console.log('req==>',req);
     if(req && req.url.substring(0,3) == '/F/'){
-       origin = 'https://www.google.com';//默认值
-       process.env.ORIGIN = 'https://www.google.com';
+      cache.put('origin','https://www.google.com');
+    }
+    
+    if(req && req.url.substring(0,3) == '/C/'){
+      cache.del('origin');
     }
     
     
