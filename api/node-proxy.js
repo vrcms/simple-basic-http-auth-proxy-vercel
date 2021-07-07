@@ -53,7 +53,10 @@ const server = http.createServer(function(req, res) {
   var cookies = new Cookies(req, res, { keys: keys });
   if(req && req.url.substring(0,3).toUpperCase() == '/F/'){
     //更改目标
-     cookies.set('lastorigin', 'https://www.google.com', { signed: true,maxAge:0 }); //永久有效      
+     var targeturl = 'https://www.google.com';//默认url
+     var inurl = req.url.substring(3);
+     console.log('目标:',inurl);
+     cookies.set('lastorigin', targeturl, { signed: true,maxAge:0 }); //永久有效      
   }
   
   if(req && req.url.substring(0,3).toUpperCase() == '/C/'){
