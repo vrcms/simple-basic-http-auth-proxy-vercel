@@ -13,13 +13,8 @@ const server = http.createServer(function(req, res) {
 //   const password = process.env.PASSWORD;
 //   const username = process.env.USERNAME;
   var origin = 'https://www.google.com';//默认值
-  const password = process.env.PASSWORD?process.env.PASSWORD:'123456';//使用环境密码或者默认密码
-  var username = origin;//使用默认域名值
-
-  
-  
-   console.log('ORIGIN:', process.env.ORIGIN);
-  console.log('PASSWORD:', process.env.PASSWORD);
+  const password = '123456';//默认密码
+  const username = 'admin';//使用默认域名值
   
   const credentials = auth(req); 
     
