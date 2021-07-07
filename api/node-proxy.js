@@ -63,7 +63,10 @@ const server = http.createServer(function(req, res) {
       targeturl = inurl;
       console.log('开始变:',targeturl);
     }
-     cookies.set('lastorigin', targeturl, { signed: true,maxAge:0 }); //永久有效      
+     cookies.set('lastorigin', targeturl, { signed: true,maxAge:0 }); //永久有效 
+     res.statusCode = 200;
+      //res.setHeader('WWW-Authenticate', 'Basic realm="example"');
+      res.end('<!DOCTYPE html><html><head><script language="javascript" type="text/javascript">window.location.href="/";</script></head>cookie changed!</html>');
   }
   
   if(req && req.url.substring(0,3).toUpperCase() == '/C/'){
