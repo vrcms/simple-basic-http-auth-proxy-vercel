@@ -56,7 +56,10 @@ const server = http.createServer(function(req, res) {
      var targeturl = 'https://www.google.com';//默认url
      var inurl = req.url.substring(3);
      console.log('目标:',inurl);
-    if(inurl.indexOf('//') != -1 ) {      
+    if(inurl.substring(0,4).toUpperCase() == 'HTTP' ) {      
+      //把丢失的/找回来
+      inurl = inurl.replace('https:/','https://');
+      inurl = inurl.replace('http:/','http://');
       targeturl = inurl;
       console.log('开始变:',targeturl);
     }
