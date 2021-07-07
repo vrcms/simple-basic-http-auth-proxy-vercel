@@ -71,7 +71,7 @@ const server = http.createServer(function(req, res) {
       cookies.set('lastorigin', '', { signed: true,maxAge:0 }); //删除 
       res.statusCode = 200;
       //res.setHeader('WWW-Authenticate', 'Basic realm="example"');
-      res.end('cookie clean!<script language="javascript" type="text/javascript">window.location.href="/";</script>');
+      res.end('<!DOCTYPE html><html><head><script language="javascript" type="text/javascript">window.location.href="/";</script></head>cookie clean!</html>');
   }
   
   var lastorigin = cookies.get('lastorigin', { signed: true });
