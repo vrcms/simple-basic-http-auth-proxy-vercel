@@ -69,9 +69,9 @@ const server = http.createServer(function(req, res) {
   if(req && req.url.substring(0,3).toUpperCase() == '/C/'){
       origin = envORIGIN;//默认值  
       cookies.set('lastorigin', '', { signed: true,maxAge:0 }); //删除 
-      res.statusCode = 401;
-      res.setHeader('WWW-Authenticate', 'Basic realm="example"');
-      res.end('Access denied. error password!');
+      res.statusCode = 200;
+      //res.setHeader('WWW-Authenticate', 'Basic realm="example"');
+      res.end('cookie clean!');
   }
   
   var lastorigin = cookies.get('lastorigin', { signed: true });
