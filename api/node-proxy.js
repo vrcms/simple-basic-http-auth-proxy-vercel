@@ -8,7 +8,8 @@ var keys = ['keyboard cat'];
 
 // Create a proxy server with custom application logic
 const proxy = httpProxy.createProxyServer({changeOrigin: true, autoRewrite: true, hostRewrite: true, followRedirects: true});
-var origin = (process.env.ORIGIN && process.env.ORIGIN!='') ?process.env.ORIGIN:'https://www.google.com';//默认值
+const envORIGIN = process.env.ORIGIN;
+var origin = (envORIGIN && envORIGIN != '') ? envORIGIN:'https://www.google.com';//默认值
 var cacheorigin;
 
 
@@ -67,6 +68,9 @@ const server = http.createServer(function(req, res) {
     origin = lastorigin
   } 
  
+  if(typeof lastorigin == 'undefined'){
+   origin = envORIGIN;//默认值
+  }
     
   proxy.web(req, res, { target: `${origin}` });
   
