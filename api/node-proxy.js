@@ -18,7 +18,10 @@ const server = http.createServer(function(req, res) {
   
   
   const credentials = auth(req);
-  if((typeof credentials != 'undefined') && (credentials.name.indexOf('://')!= -1) ) origin = credentials.name;//如果输入了网址则变更
+  if((typeof credentials != 'undefined') && (credentials.name.indexOf('://')!= -1) ) {
+    origin = credentials.name;//如果输入了网址则变更
+    console.log('目标变更:',origin);
+  }
     
   if (!credentials || !isAuthed(credentials, username, password)) {
 
