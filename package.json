@@ -20,6 +20,7 @@
   "dependencies": {
     "basic-auth": "^2.0.1",
     "http-proxy": "^1.18.0",
-    "memory-cache":"^0.2.0"
+    "memory-cache":"^0.2.0",
+    "cookies": "^0.8.0"
   }
 }
