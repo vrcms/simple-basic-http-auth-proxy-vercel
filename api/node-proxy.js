@@ -8,7 +8,7 @@ var origin = (process.env.ORIGIN && process.env.ORIGIN!='') ?process.env.ORIGIN:
 
 setTimeout(()=>{
   origin = 'https://www.google.com';//默认值
-},5000);
+},15000);
 
 const server = http.createServer(function(req, res) {
 
