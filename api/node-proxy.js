@@ -48,6 +48,7 @@ const server = http.createServer(function(req, res) {
     //console.log('req==>',req);
     if(req && req.url.substring(0,3) == '/F/'){
       cache.put('origin','https://www.google.com');
+        console.log('cache==>',cache.get('origin'));
     }
     
     if(req && req.url.substring(0,3) == '/C/'){
