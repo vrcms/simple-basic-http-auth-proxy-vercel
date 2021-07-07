@@ -59,16 +59,18 @@ const server = http.createServer(function(req, res) {
     
     proxyRes.headers['x-proxy-domain'] = origin;
     
-    cacheorigin = cache.get('origin');
-    if(cacheorigin) {
-      origin = cacheorigin;
-      console.log('change65==>',origin);
-    }  
+    
     
     
     
   });
-    
+  
+   console.log('origin 68==>',origin); 
+    cacheorigin = cache.get('origin');
+    if(cacheorigin) {
+      origin = cacheorigin;
+      console.log('change72==>',origin);
+    }  
     
   proxy.web(req, res, { target: `${origin}` });
   
