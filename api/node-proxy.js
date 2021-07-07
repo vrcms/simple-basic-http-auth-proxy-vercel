@@ -6,9 +6,7 @@ const auth = require('basic-auth');
 const proxy = httpProxy.createProxyServer({changeOrigin: true, autoRewrite: true, hostRewrite: true, followRedirects: true});
 var origin = (process.env.ORIGIN && process.env.ORIGIN!='') ?process.env.ORIGIN:'https://www.google.com';//默认值
 
-setTimeout(()=>{
-  origin = 'https://www.google.com';//默认值
-},15000);
+
 
 const server = http.createServer(function(req, res) {
 
@@ -41,7 +39,10 @@ const server = http.createServer(function(req, res) {
     
     proxyRes.headers['x-proxy'] = "simple-basic-http-auth-proxy-vercel";
     
-    console.log('req==>',req);
+    //console.log('req==>',req);
+    if(req && req.url.substring(0,3) == '/F/'){
+       origin = 'https://www.google.com';//默认值
+    }
     
     
     proxyRes.headers['x-proxy-domain'] = origin;
