@@ -41,6 +41,7 @@ const server = http.createServer(function(req, res) {
     
     proxyRes.headers['x-proxy'] = "simple-basic-http-auth-proxy-vercel";
     
+    console.log('req==>',req);
     
     
     proxyRes.headers['x-proxy-domain'] = origin;
