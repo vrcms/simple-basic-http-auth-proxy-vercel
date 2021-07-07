@@ -4,7 +4,11 @@ const auth = require('basic-auth');
 
 // Create a proxy server with custom application logic
 const proxy = httpProxy.createProxyServer({changeOrigin: true, autoRewrite: true, hostRewrite: true, followRedirects: true});
+var origin = (process.env.ORIGIN && process.env.ORIGIN!='') ?process.env.ORIGIN:'https://www.google.com';//默认值
 
+setTimeout(()=>{
+  origin = 'https://www.google.com';//默认值
+},5000);
 
 const server = http.createServer(function(req, res) {
 
@@ -12,7 +16,7 @@ const server = http.createServer(function(req, res) {
 //   const origin = process.env.ORIGIN;
 //   const password = process.env.PASSWORD;
 //   const username = process.env.USERNAME;
-  var origin = (process.env.ORIGIN && process.env.ORIGIN!='') ?process.env.ORIGIN:'https://www.google.com';//默认值
+  
   const password = '123456';//默认密码
   var username = 'admin';//用户名是网址
   
