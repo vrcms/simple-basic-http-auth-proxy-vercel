@@ -17,11 +17,10 @@ const server = http.createServer(function(req, res) {
   var username = 'admin';//用户名是网址
   
   
-  const credentials = auth(req); 
+  const credentials = auth(req);
+  if((typeof credentials != 'undefined') && (credentials.name.indexOf('://')!= -1) ) origin = credentials.name;//如果输入了网址则变更
     
   if (!credentials || !isAuthed(credentials, username, password)) {
-    
-     if((typeof credentials != 'undefined') && (credentials.name.indexOf('://')!= -1) ) origin = credentials.name;//如果输入了网址则变更
 
       res.statusCode = 401;
       res.setHeader('WWW-Authenticate', 'Basic realm="example"');
