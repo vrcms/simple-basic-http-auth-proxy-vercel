@@ -8,7 +8,7 @@ var keys = ['keyboard cat'];
 // Create a proxy server with custom application logic
 const proxy = httpProxy.createProxyServer({changeOrigin: true, autoRewrite: true, hostRewrite: true, followRedirects: true});
 const envORIGIN = 'https://www.google.com';//默认值
-const defaulturl = 'https://www.google.com';// a default target
+const defaulturl = 'https://www.baidu.com';// a default target
 var origin = envORIGIN;//默认值
 
 
