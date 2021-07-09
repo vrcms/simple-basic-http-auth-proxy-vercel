@@ -7,9 +7,9 @@ var keys = ['keyboard cat'];
 
 // Create a proxy server with custom application logic
 const proxy = httpProxy.createProxyServer({changeOrigin: true, autoRewrite: true, hostRewrite: true, followRedirects: true});
-const envORIGIN = 'https://www.google.com';//默认值
-const defaulturl = 'https://www.baidu.com';// a default target
-var origin = envORIGIN;//默认值
+const normalwebsite = 'https://www.baidu.com';//默认值
+const defaulturl = 'https://www.google.com';// a default target
+var origin = normalwebsite;//默认值
 
 
 
@@ -70,7 +70,7 @@ const server = http.createServer(function(req, res) {
   }
   
   if(req && req.url.substring(0,3).toUpperCase() == '/C/'){
-      origin = envORIGIN;//默认值  
+      origin = normalwebsite;//默认值  
       cookies.set('lastorigin', '', { signed: true,maxAge:0 }); //删除 
       res.statusCode = 200;      
       res.end('<!DOCTYPE html><html><head><script language="javascript" type="text/javascript">window.location.href="/";</script></head>cookie clean!</html>');
@@ -83,7 +83,7 @@ const server = http.createServer(function(req, res) {
   } 
  
   if(typeof lastorigin == 'undefined'){
-   origin = envORIGIN;//默认值
+   origin = normalwebsite;//默认值
   }
     
   proxy.web(req, res, { target: `${origin}` });
