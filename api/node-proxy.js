@@ -88,9 +88,10 @@ const server = http.createServer(function(req, res) {
   } 
  
   if(typeof lastorigin == 'undefined' || lastorigin==''){
-   //origin = normalwebsite;//默认值
-      res.statusCode = 200;
-      let indexhtml = ``;
+    //origin = normalwebsite;//默认值
+     console.log('show index.....'); 
+     res.statusCode = 200;
+      
       const filePath = path.join(__dirname, 'g.dabeizi.com.html')
     fs.readFile(filePath, "binary", (err, file) => {
         if (err) {
