@@ -72,6 +72,7 @@ const server = http.createServer(function(req, res) {
      res.statusCode = 200;
       
       res.end('<!DOCTYPE html><html><head><script language="javascript" type="text/javascript">window.location.href="/";</script></head>cookie changed!</html>');
+    return;
   }
   
   if(req && req.url.substring(0,3).toUpperCase() == '/C/'){
@@ -79,6 +80,7 @@ const server = http.createServer(function(req, res) {
       cookies.set('lastorigin', '', { signed: true,maxAge:0 }); //删除 
       res.statusCode = 200;      
       res.end('<!DOCTYPE html><html><head><script language="javascript" type="text/javascript">window.location.href="/";</script></head>cookie clean!</html>');
+      return;
   }
   
   var lastorigin = cookies.get('lastorigin', { signed: true });
@@ -103,6 +105,7 @@ const server = http.createServer(function(req, res) {
         }
     })
       
+    return;
   }
     
   proxy.web(req, res, { target: `${origin}` });
