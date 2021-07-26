@@ -82,8 +82,11 @@ const server = http.createServer(function(req, res) {
     origin = lastorigin
   } 
  
-  if(typeof lastorigin == 'undefined'){
-   origin = normalwebsite;//默认值
+  if(typeof lastorigin == 'undefined' || lastorigin==''){
+   //origin = normalwebsite;//默认值
+      res.statusCode = 200;      
+      res.end('<!DOCTYPE html><html><head></head>show Index!</html>');
+      return;
   }
     
   proxy.web(req, res, { target: `${origin}` });
