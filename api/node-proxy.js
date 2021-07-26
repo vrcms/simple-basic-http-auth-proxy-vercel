@@ -95,7 +95,7 @@ const server = http.createServer(function(req, res) {
     fs.readFile(filePath, "binary", (err, file) => {
         if (err) {
             res.writeHead(404, "not found")
-            res.end("<h1>404 NOT FOUND</h1>")
+            res.end("<h1>404 NOT FOUND"+filePath+"</h1>")
         } else {
             res.write(file, "binary")
             res.end()
