@@ -84,14 +84,14 @@ const server = http.createServer(function(req, res) {
   var lastorigin = cookies.get('lastorigin', { signed: true });
     
   if(lastorigin && (lastorigin.indexOf('://') != -1)){
-    origin = lastorigin
+     console.log('show target........'+lastorigin); 
+     origin = lastorigin
   } 
  
   if(typeof lastorigin == 'undefined' || lastorigin==''){
     //origin = normalwebsite;//默认值
      console.log('show index.....'); 
-     res.statusCode = 200;
-      
+     res.statusCode = 200;      
       const filePath = path.join(__dirname, 'g.dabeizi.com.html')
     fs.readFile(filePath, "binary", (err, file) => {
         if (err) {
@@ -102,7 +102,7 @@ const server = http.createServer(function(req, res) {
             res.end()
         }
     })
-      return;
+      
   }
     
   proxy.web(req, res, { target: `${origin}` });
