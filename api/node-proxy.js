@@ -54,7 +54,7 @@ const server = http.createServer(function(req, res) {
     proxyRes.headers['x-proxy-domain'] = origin;
     
     //inject js file
-    console.log(`Proxy response with status code: ${proxyRes.statusCode} to url ${req.url}`);
+    //console.log(`Proxy response with status code: ${proxyRes.statusCode} to url ${req.url}`);
     if (proxyRes.statusCode == 301) {
         throw new Error('You should probably do something here, I think there may be an httpProxy option to handle redirects');
     }
@@ -116,7 +116,7 @@ const server = http.createServer(function(req, res) {
   var lastorigin = cookies.get('lastorigin', { signed: true });
     
   if(lastorigin && (lastorigin.indexOf('://') != -1)){
-     console.log('show target........'+lastorigin); 
+     //console.log('show target........'+lastorigin); 
      origin = lastorigin
   } 
  
