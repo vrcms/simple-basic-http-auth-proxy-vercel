@@ -60,7 +60,7 @@ const server = http.createServer(function(req, res) {
   var cookies = new Cookies(req, res, { keys: keys });
   if(req && req.url.substring(0,3).toUpperCase() == '/F/'){
     //更改目标
-     var targeturl = defaulturl;//默认url
+     var targeturl = '';//默认url
      var inurl = req.url.substring(3);
      
     if(inurl.substring(0,4).toUpperCase() == 'HTTP' ) {      
