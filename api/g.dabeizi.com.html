@@ -27,6 +27,11 @@
 	
 	
 	<style type="text/css">
+	  [v-cloak]{
+		  display: none;
+	  }
+	  
+	  
 		#topsearch{
 			position: fixed;
 			top: 0;
@@ -72,7 +77,7 @@
 	</style>
 </head>
 <body>
-	<div id="topsearch">
+	<div id="topsearch" v-cloak>
 		 
 				
 		<van-search 
@@ -158,6 +163,7 @@
 	    el: '#topsearch',
 		data(){
 			return{
+				nowhost:window.location.host,
 				sitelist:[],
 				localurl:[],
 				protocoloptions:[
@@ -171,8 +177,8 @@
 		  },
 		mounted() {
 			let defaulturl = [
-				{title:'百度',url:'https://g.dabeizi.com/f/https://www.baidu.com'},
-				{title:'首页',url:'https://g.dabeizi.com/c/'},
+				{title:'百度',url:this.nowhost+'f/https://www.baidu.com'},
+				{title:'首页',url:this.nowhost+'c/'},
 				
 			];//默认值
 			
@@ -215,7 +221,7 @@
 				console.log('search.....');
 				let newurl = {
 					title:this.value,
-					url:'https://g.dabeizi.com/f/'+this.protocol+'://'+this.value
+					url:this.nowhost+'f/'+this.protocol+'://'+this.value
 				}
 				//skip exists
 				for (let i = 0; i < this.sitelist.length; i++) {
