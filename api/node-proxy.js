@@ -115,6 +115,16 @@ const server = http.createServer(function(req, res) {
   
 });
 
+
+server.on('error', function (err, req, res) {
+    res.writeHead(500, {
+        'Content-Type': 'text/plain'
+    });
+
+    res.end('Something went wrong.');
+});
+
+
 const port = process.env.AWS_LAMBDA_RUNTIME_API.split(':')[1];
 console.log(`simple-basic-http-auth-proxy for Vercel started on port ${port}`);
 server.listen(port);
