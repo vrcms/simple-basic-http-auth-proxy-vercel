@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="https://web.cms.haodanku.com/favicon.ico">
+	
 	<link
 	  rel="stylesheet"
 	  href="https://cdn.jsdelivr.net/npm/vant@2.12/lib/index.css"
@@ -11,18 +12,30 @@
 	
 	<!-- 引入 Vue 和 Vant 的 JS 文件 -->
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.6/dist/vue.min.js"></script>
+
 	<script src="https://cdn.jsdelivr.net/npm/vant@2.12/lib/vant.min.js"></script>
 	
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 	<script src="https://cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js"></script>
 	
+	
+	<!-- 引入样式 -->
+	<!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
+	<!-- 引入组件库 -->
+	<!-- <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
+	
+	
 	<style type="text/css">
 		#topsearch{
 			position: fixed;
 			top: 0;
+			left: 0;
 			width: 100%;
-			height: 1250px;
+			height: 250px;
+			max-height: 250px;
+			overflow-y: auto;
+			overflow-x: hidden;
 			z-index: 1001;
 			background: #f4f4f4;
 			border-bottom: 1px solid #ccc;
@@ -30,7 +43,7 @@
 		}
 		
 		#app.hastop .index .index-fixed .index-top{
-			top:1250px!important;
+			top:250px!important;
 		}
 		
 		#app.notop .index .index-fixed .index-top{
@@ -42,7 +55,7 @@
 			
 		}
 		#app.hastop{
-			margin-top: 1250px!important;
+			margin-top: 250px!important;
 		}
 		
 		#app.notop{
@@ -60,8 +73,9 @@
 </head>
 <body>
 	<div id="topsearch">
-		
-		<van-search
+		 
+				
+		<van-search 
 		  v-model="value"
 		  show-action
 		  label=""
@@ -81,15 +95,12 @@
 		
 		
 
-
-		<div style="height: 100px;margin-top: 10px;">
-			<van-grid direction="horizontal" :icon-size="10"  :column-num="3">
-			  <van-grid-item v-for="(item,index) in sitelist" :key="index" :url="item.url" >
-				  <div style="color: #333;"  >
-						<span style="padding:5px 5px;" @click.stop="removethis(index)">x</span>{{item.title}} 
-				  </div>				  
-			  </van-grid-item>
-			</van-grid>
+		<div style="height: 100px;margin-top: 10px;" >			
+			<van-row >
+			  <van-col span="8" v-for="(item,index) in sitelist" :key="index">
+				  <van-tag style="padding: 5px 15px;width: 100%;height: 30px;margin-bottom: 1px;" closeable size="medium" type="primary" @close="removethis(index)"> {{item.title}}	</van-tag>				  
+			  </van-col>			  
+			</van-row>
 		</div>
 		
 		
@@ -203,7 +214,10 @@
 					title:this.value,
 					url:'https://g.dabeizi.com/f/'+this.protocol+'://'+this.value
 				}
-				
+				//skip exists
+				for (let i = 0; i < this.sitelist.length; i++) {
+					if(this.sitelist[i].url == newurl.url) return;//exist do nothing
+				}
 				this.sitelist.push(newurl);
 				localStorage.setItem('cachelist', JSON.stringify( this.sitelist ));
 				
@@ -212,11 +226,14 @@
 	  });
 	
 	  // 调用函数组件，弹出一个 Toast
-	  vant.Toast('加载完成');
+	  //vant.Toast('加载完成');
 	
 	  // 通过 CDN 引入时不会自动注册 Lazyload 组件
 	  // 可以通过下面的方式手动注册
-	  Vue.use(vant.Lazyload);
+	  Vue.use(vant.Col);
+	  Vue.use(vant.Row);
+	  Vue.use(vant.Icon);
+	  Vue.use(vant.Tag);
 	  
 	 
 	 
