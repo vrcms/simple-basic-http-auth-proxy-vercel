@@ -54,28 +54,30 @@ const server = http.createServer(function(req, res) {
     proxyRes.headers['x-proxy-domain'] = origin;
     
     //inject js file
+    //not working... something wrong...
     //console.log(`Proxy response with status code: ${proxyRes.statusCode} to url ${req.url}`);
-    if (proxyRes.statusCode == 301) {
-        throw new Error('You should probably do something here, I think there may be an httpProxy option to handle redirects');
-    }
-    let body = [];
-    proxyRes.on('data', function (chunk) {
-        body.push(chunk);
-    });
-    proxyRes.on('end', async function () {
-        let buffer = Buffer.concat(body);
-        try {
-            let $ = null;
-            const isCompressed = proxyRes.headers['content-encoding'] === 'gzip';
-            const decompressed = isCompressed ? await ungzip(buffer) : buffer;
-            const scriptTag = '<script>alert("is a:'+req.url+'")</script>';
-            $ = cheerio.load(decompressed.toString());
-            $('body').append(scriptTag);
-            res.end($.html());
-        } catch (e) {
-            console.log(e);
-        }
-    });
+//     if (proxyRes.statusCode == 301) {
+//         throw new Error('You should probably do something here, I think there may be an httpProxy option to handle redirects');
+//     }
+//     let body = [];
+//     proxyRes.on('data', function (chunk) {
+//         body.push(chunk);
+//     });
+    
+//     proxyRes.on('end', async function () {
+//         let buffer = Buffer.concat(body);
+//         try {
+//             let $ = null;
+//             const isCompressed = proxyRes.headers['content-encoding'] === 'gzip';
+//             const decompressed = isCompressed ? await ungzip(buffer) : buffer;
+//             const scriptTag = '<script>alert("is a:'+req.url+'")</script>';
+//             $ = cheerio.load(decompressed.toString());
+//             $('body').append(scriptTag);
+//             res.end($.html());
+//         } catch (e) {
+//             console.log(e);
+//         }
+//     });
     
     //end
     
