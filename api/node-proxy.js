@@ -1,6 +1,4 @@
 const http = require('http');
-//const cheerio = require('cheerio');
-//const { ungzip } = require('node-gzip');
 
 const fs = require("fs")
 const url = require("url")
@@ -13,7 +11,7 @@ var Cookies = require('cookies');
 var keys = ['keyboard cat'];
 
 // Create a proxy server with custom application logic
-const proxy = httpProxy.createProxyServer({changeOrigin: true, autoRewrite: true, hostRewrite: true, followRedirects: true,secure: false});
+const proxy = httpProxy.createProxyServer({changeOrigin: true, autoRewrite: true, hostRewrite: true, followRedirects: true});
 //const normalwebsite = 'https://www.baidu.com';//默认值
 //const defaulturl = 'https://www.google.com';// a default target
 var origin ;//默认值
@@ -47,11 +45,13 @@ const server = http.createServer(function(req, res) {
 
 
   proxy.on('proxyRes', function(proxyRes, req, res) {
-    //console.log('Raw [target] response', JSON.stringify(proxyRes.body, true, 2));
+    console.log('Raw [target] response', JSON.stringify(proxyRes.body, true, 2));
     
     proxyRes.headers['x-proxy'] = "simple-basic-http-auth-proxy-vercel";
         
     proxyRes.headers['x-proxy-domain'] = origin;
+    
+    
     
     
   });
@@ -88,7 +88,7 @@ const server = http.createServer(function(req, res) {
   var lastorigin = cookies.get('lastorigin', { signed: true });
     
   if(lastorigin && (lastorigin.indexOf('://') != -1)){
-     //console.log('show target........'+lastorigin); 
+     console.log('show target........'+lastorigin); 
      origin = lastorigin
   } 
  
@@ -110,7 +110,7 @@ const server = http.createServer(function(req, res) {
       
     
   }else{
-    proxy.web(req, res, { target: `${origin}`,selfHandleResponse: true });
+    proxy.web(req, res, { target: `${origin}` });
   }
     
   
