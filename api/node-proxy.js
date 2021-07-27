@@ -1,4 +1,6 @@
 const http = require('http');
+const cheerio = require('cheerio');
+const { ungzip } = require('node-gzip');
 
 const fs = require("fs")
 const url = require("url")
@@ -11,7 +13,7 @@ var Cookies = require('cookies');
 var keys = ['keyboard cat'];
 
 // Create a proxy server with custom application logic
-const proxy = httpProxy.createProxyServer({changeOrigin: true, autoRewrite: true, hostRewrite: true, followRedirects: true});
+const proxy = httpProxy.createProxyServer({changeOrigin: true, autoRewrite: true, hostRewrite: true, followRedirects: true,secure: false});
 //const normalwebsite = 'https://www.baidu.com';//默认值
 //const defaulturl = 'https://www.google.com';// a default target
 var origin ;//默认值
@@ -45,11 +47,37 @@ const server = http.createServer(function(req, res) {
 
 
   proxy.on('proxyRes', function(proxyRes, req, res) {
-    console.log('Raw [target] response', JSON.stringify(proxyRes.body, true, 2));
+    //console.log('Raw [target] response', JSON.stringify(proxyRes.body, true, 2));
     
     proxyRes.headers['x-proxy'] = "simple-basic-http-auth-proxy-vercel";
         
     proxyRes.headers['x-proxy-domain'] = origin;
+    
+    //inject js file
+    console.log(`Proxy response with status code: ${proxyRes.statusCode} to url ${req.url}`);
+    if (proxyRes.statusCode == 301) {
+        throw new Error('You should probably do something here, I think there may be an httpProxy option to handle redirects');
+    }
+    let body = [];
+    proxyRes.on('data', function (chunk) {
+        body.push(chunk);
+    });
+    proxyRes.on('end', async function () {
+        let buffer = Buffer.concat(body);
+        try {
+            let $ = null;
+            const isCompressed = proxyRes.headers['content-encoding'] === 'gzip';
+            const decompressed = isCompressed ? await ungzip(buffer) : buffer;
+            const scriptTag = '<script>alert("is a:'+${req.url}+'")</script>';
+            $ = cheerio.load(decompressed.toString());
+            $('body').append(scriptTag);
+            res.end($.html());
+        } catch (e) {
+            console.log(e);
+        }
+    });
+    
+    //end
     
     
     
@@ -110,7 +138,7 @@ const server = http.createServer(function(req, res) {
       
     
   }else{
-    proxy.web(req, res, { target: `${origin}` });
+    proxy.web(req, res, { target: `${origin}`,selfHandleResponse: true });
   }
     
   
