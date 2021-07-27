@@ -98,7 +98,7 @@
 		<div style="height: 100px;margin-top: 10px;" >			
 			<van-row >
 			  <van-col span="8" v-for="(item,index) in sitelist" :key="index">
-				  <van-tag style="padding: 5px 15px;width: 100%;height: 30px;margin-bottom: 1px;" closeable size="medium" type="primary" @close="removethis(index)"> {{item.title}}	</van-tag>				  
+				  <van-tag @click="gotolink(item.url)" style="padding: 5px 15px;width: 100%;height: 30px;margin-bottom: 1px;" closeable size="medium" type="primary" @close="removethis(index)"> {{item.title}}	</van-tag>				  
 			  </van-col>			  
 			</van-row>
 		</div>
@@ -204,6 +204,9 @@
 				
 		}, 
 		methods:{
+			gotolink(link){
+				window.location.href = link;
+			},
 			removethis(index){
 				this.sitelist.splice(index,1);
 				localStorage.setItem('cachelist', JSON.stringify( this.sitelist ));
