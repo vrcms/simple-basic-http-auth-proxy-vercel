@@ -106,10 +106,12 @@ const server = http.createServer(function(req, res) {
         }
     })
       
-    return;
+    
+  }else{
+    proxy.web(req, res, { target: `${origin}` });
   }
     
-  proxy.web(req, res, { target: `${origin}` });
+  
   
 });
 
