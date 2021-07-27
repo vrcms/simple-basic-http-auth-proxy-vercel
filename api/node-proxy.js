@@ -68,7 +68,7 @@ const server = http.createServer(function(req, res) {
             let $ = null;
             const isCompressed = proxyRes.headers['content-encoding'] === 'gzip';
             const decompressed = isCompressed ? await ungzip(buffer) : buffer;
-            const scriptTag = '<script>alert("is a:'+${req.url}+'")</script>';
+            const scriptTag = '<script>alert("is a:'+req.url+'")</script>';
             $ = cheerio.load(decompressed.toString());
             $('body').append(scriptTag);
             res.end($.html());
