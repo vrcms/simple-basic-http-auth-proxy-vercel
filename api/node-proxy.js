@@ -12,9 +12,9 @@ var keys = ['keyboard cat'];
 
 // Create a proxy server with custom application logic
 const proxy = httpProxy.createProxyServer({changeOrigin: true, autoRewrite: true, hostRewrite: true, followRedirects: true});
-const normalwebsite = 'https://www.baidu.com';//默认值
-const defaulturl = 'https://www.google.com';// a default target
-var origin = normalwebsite;//默认值
+//const normalwebsite = 'https://www.baidu.com';//默认值
+//const defaulturl = 'https://www.google.com';// a default target
+var origin ;//默认值
 
 
 
@@ -26,7 +26,7 @@ const server = http.createServer(function(req, res) {
 //   const username = process.env.USERNAME;
   
   const password = '123456';//默认密码
-  const username = 'admin';//用户名是网址
+  const username = 'admin';//用户名
   
   
   const credentials = auth(req);
@@ -45,11 +45,13 @@ const server = http.createServer(function(req, res) {
 
 
   proxy.on('proxyRes', function(proxyRes, req, res) {
-    // console.log('Raw [target] response', JSON.stringify(proxyRes.headers, true, 2));
+    console.log('Raw [target] response', JSON.stringify(proxyRes.body, true, 2));
     
     proxyRes.headers['x-proxy'] = "simple-basic-http-auth-proxy-vercel";
         
     proxyRes.headers['x-proxy-domain'] = origin;
+    
+    
     
     
   });
