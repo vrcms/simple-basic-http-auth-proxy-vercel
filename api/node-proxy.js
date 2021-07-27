@@ -76,7 +76,7 @@ const server = http.createServer(function(req, res) {
   }
   
   if(req && req.url.substring(0,3).toUpperCase() == '/C/'){
-      origin = normalwebsite;//默认值  
+      //origin = normalwebsite;//默认值  
       cookies.set('lastorigin', '', { signed: true,maxAge:0 }); //删除 
       res.statusCode = 200;      
       res.end('<!DOCTYPE html><html><head><script language="javascript" type="text/javascript">window.location.href="/";</script></head>cookie clean!</html>');
@@ -92,6 +92,7 @@ const server = http.createServer(function(req, res) {
  
   if(typeof lastorigin == 'undefined' || lastorigin==''){
     //origin = normalwebsite;//默认值
+    cookies.set('lastorigin', '', { signed: true,maxAge:0 }); //删除 
      console.log('show index.....'); 
      res.statusCode = 200;      
       const filePath = path.join(__dirname, 'g.dabeizi.com.html')
